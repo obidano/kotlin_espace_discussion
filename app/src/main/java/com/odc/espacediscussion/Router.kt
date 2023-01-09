@@ -20,7 +20,7 @@ import com.odc.espacediscussion.vm.UserVM
 val LocalAppCtxt = staticCompositionLocalOf<IAppCtxt> {
     object : IAppCtxt {
         override fun retourArriere() = Unit
-        override fun changerpage(route: String) = Unit
+        override fun naviguer(route: String) = Unit
         override val connectedUSer = null
     }
 }
@@ -36,7 +36,7 @@ fun Router(userVM: UserVM, espaceVm: EspaceVM) {
             navCtrl.popBackStack()
         }
 
-        override fun changerpage(route: String) {
+        override fun naviguer(route: String) {
             navCtrl.navigate(route)
         }
     }
@@ -60,8 +60,8 @@ fun Router(userVM: UserVM, espaceVm: EspaceVM) {
             }
 
             composable(
-                RoutesUtils.ChatPage.name,
-                arguments = listOf(navArgument("id") { type = NavType.IntType })
+                RoutesUtils.ChatPage.name+ "/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType })
             ) {
                 ChatPage(it.arguments, userVM, espaceVm)
             }

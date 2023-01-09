@@ -4,6 +4,6 @@ import com.odc.espacediscussion.models.UserModel
 
 interface IAppCtxt {
     fun retourArriere()
-    fun changerpage(route: String)
+    fun naviguer(route: String)
     val connectedUSer: UserModel?
 }

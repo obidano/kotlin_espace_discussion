@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.odc.espacediscussion.pages
 
 import android.annotation.SuppressLint
@@ -64,7 +66,7 @@ fun AppBar(espaces: List<EspaceModel>) {
         title = { Text("Espaces de Discussion (${espaces.size})", fontSize = 15.sp) },
         actions = {
             IconButton(
-                onClick = { appCtx.changerpage(RoutesUtils.EspaceForm.name) }) {
+                onClick = { appCtx.naviguer(RoutesUtils.EspaceForm.name) }) {
                 Icon(Icons.Rounded.AddComment, "", tint = Color.fromHex(Orange1))
             }
         }
@@ -74,7 +76,11 @@ fun AppBar(espaces: List<EspaceModel>) {
 @Composable
 @Preview(showBackground = true, heightDp = 100)
 fun EspacesItem(data: EspaceModel = FakeData.espaces[0]) {
-    Card(modifier = Modifier.padding(5.dp), shape = RoundedCornerShape(5.dp)) {
+    val appCtx = LocalAppCtxt.current
+
+    Card(modifier = Modifier.padding(5.dp), onClick = {
+        appCtx.naviguer(RoutesUtils.ChatPage.name + "/${data.ID}")
+    }, shape = RoundedCornerShape(5.dp)) {
         Row(Modifier
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp),

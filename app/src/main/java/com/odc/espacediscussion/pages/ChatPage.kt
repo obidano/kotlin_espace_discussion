@@ -2,6 +2,7 @@ package com.odc.espacediscussion.pages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,9 +31,11 @@ import com.odc.espacediscussion.vm.UserVM
 
 @Composable
 fun ChatPage(args: Bundle?, userVM: UserVM, espaceVm: EspaceVM) {
-    val espaceID = args?.getInt("id") ?: 0
-    val espace = espaceVm.listeEspace.value.find { i -> i.ID == espaceID }!!
-    val messages = espaceVm.listeMessage["$espaceID"] ?: ArrayList<MessageModel>()
+    val espaceID = args?.getString("id") ?: "0"
+    Log.d("", "ChatPage: $espaceID")
+
+    val espace = espaceVm.listeEspace.value.find { i -> i.ID ==  espaceID.toInt() }!!
+    val messages = espaceVm.listeMessage[espaceID] ?: ArrayList<MessageModel>()
     ChatPageBody(espace, messages)
 }
 

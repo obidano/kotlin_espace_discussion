@@ -20,6 +20,7 @@ import com.odc.espacediscussion.LocalAppCtxt
 import com.odc.espacediscussion.R
 import com.odc.espacediscussion.models.UserModel
 import com.odc.espacediscussion.ui.theme.Orange1
+import com.odc.espacediscussion.utils.RoutesUtils
 import com.odc.espacediscussion.utils.fromHex
 import com.odc.espacediscussion.vm.UserVM
 import com.odc.espacediscussion.widgets.InputText
@@ -27,11 +28,16 @@ import com.odc.espacediscussion.widgets.TitleSection
 
 @Composable
 fun LoginPage(userVM: UserVM) {
+    val appCtx = LocalAppCtxt.current
 
     val connexionAPI: (data: UserModel) -> Unit = { d ->
         userVM.connecter(d)
     }
-
+    val userConnecte = userVM.userConnecte.value
+    remember(userConnecte) {
+        if (userConnecte != null) appCtx.naviguer(RoutesUtils.Espaces.name)
+        null
+    }
 
     LoginPageBody(connexionAPI)
 }
@@ -45,6 +51,8 @@ fun LoginPageBody(connexionAPI: (data: UserModel) -> Unit) {
     val identifiant = remember {
         mutableStateOf("")
     }
+
+
     Scaffold(backgroundColor = Color.fromHex("f8f9fa")) {
         Column(Modifier
             .fillMaxSize()
@@ -95,7 +103,6 @@ fun LoginPageBody(connexionAPI: (data: UserModel) -> Unit) {
                             Box {
                                 IconButton(onClick = {
                                     connexionAPI(UserModel(identifiant = identifiant.value))
-                                    //appCtx.changerpage(RoutesUtils.Espaces.name)
                                 }) {
 
                                     Icon(
