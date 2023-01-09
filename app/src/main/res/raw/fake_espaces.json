@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1, "name":"Echange sur Kotlin", "description" :"Lorem ipsum dolor sit amet, consectetur adipiscing elit", "creator_id": 1
+  },
+  {
+    "id": 2, "name":"AI ChatGPT", "description" :"Sed laoreet porta consequat.", "creator_id": 1
+  },
+  {
+    "id": 3, "name":"Concevoir un Robot", "description" :"Curabitur vel scelerisque leo.", "creator_id": 1
+  },
+  {
+    "id": 4, "name":"Fablab solidaire", "description" :"Vivamus sagittis felis sed nisi posuere, auctor volutpat tellus laoreet.", "creator_id": 1
+  },
+  {
+    "id": 5, "name":"NodeJS Communauté", "description" :"Ut vel eros suscipit, viverra velit vel, auctor arcu.", "creator_id": 1
+  },
+  {
+    "id": 6, "name":"Marketing Digital", "description" :"Fusce aliquam congue orci.", "creator_id": 1
+  },
+  {
+    "id": 7, "name":"Aws", "description" :"Suspendisse potenti.", "creator_id": 1
+  }
+]
