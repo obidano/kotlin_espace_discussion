@@ -97,6 +97,12 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
+    // socket.io
+    implementation ('io.socket:socket.io-client:2.1.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

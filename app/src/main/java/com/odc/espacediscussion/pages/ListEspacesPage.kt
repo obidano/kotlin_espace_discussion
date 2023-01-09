@@ -16,6 +16,7 @@ import androidx.compose.material.icons.rounded.ArrowBackIos
 import androidx.compose.material.icons.rounded.ChatBubble
 import androidx.compose.material.icons.rounded.People
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +36,9 @@ import com.odc.espacediscussion.vm.UserVM
 @Composable
 fun ListEspacesPage(userVM: UserVM, espaceVm: EspaceVM) {
     val espaces = espaceVm.listeEspace.value
+    LaunchedEffect(Unit) {
+        espaceVm.socketConnection()
+    }
     EspacesPageBody(espaces)
 }
 
@@ -77,6 +81,8 @@ fun AppBar(espaces: List<EspaceModel>) {
 @Preview(showBackground = true, heightDp = 100)
 fun EspacesItem(data: EspaceModel = FakeData.espaces[0]) {
     val appCtx = LocalAppCtxt.current
+
+
 
     Card(modifier = Modifier.padding(5.dp), onClick = {
         appCtx.naviguer(RoutesUtils.ChatPage.name + "/${data.ID}")

@@ -1,13 +1,16 @@
 package com.odc.espacediscussion.di
 
+import android.content.Context
 import com.odc.espacediscussion.api.EspaceAPI
 import com.odc.espacediscussion.api.UserAPI
 import com.odc.espacediscussion.depot.EspaceDepot
 import com.odc.espacediscussion.depot.UserDepot
 import com.odc.espacediscussion.utils.Constantes
+import com.odc.espacediscussion.utils.SocketUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,9 +29,20 @@ annotation class EspaceAPIAnnot
 @Retention(AnnotationRetention.BINARY)
 annotation class UserAPIAnnot
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SocketUtilsAnnot
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideContext(
+        @ApplicationContext context: Context,
+    ): Context {
+        return context
+    }
 
     @Singleton
     @Provides
@@ -71,6 +85,16 @@ object AppModule {
     @Provides
     fun provideUserDepot(@UserAPIAnnot api: UserAPI): UserDepot {
         return UserDepot(api)
+    }
+
+    /*
+    SOCKET
+     */
+    @Singleton
+    @Provides
+    @SocketUtilsAnnot
+    fun provideSocket(@ApplicationContext appContext: Context): SocketUtils {
+        return SocketUtils(appContext)
     }
 
 

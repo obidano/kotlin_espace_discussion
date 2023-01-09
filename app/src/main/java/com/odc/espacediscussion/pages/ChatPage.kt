@@ -34,16 +34,20 @@ fun ChatPage(args: Bundle?, userVM: UserVM, espaceVm: EspaceVM) {
     val espaceID = args?.getString("id") ?: "0"
     Log.d("", "ChatPage: $espaceID")
 
+    val joindreRoom:()->Unit={
+        espaceVm.souscrire(espaceID)
+    }
+
     val espace = espaceVm.listeEspace.value.find { i -> i.ID ==  espaceID.toInt() }!!
     val messages = espaceVm.listeMessage[espaceID] ?: ArrayList<MessageModel>()
-    ChatPageBody(espace, messages)
+    ChatPageBody(espace, messages,joindreRoom)
 }
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ChatPageBody(espace: EspaceModel, messages: List<MessageModel>) {
-    Scaffold(topBar = { ChatAppBar(espace) }) {
+fun ChatPageBody(espace: EspaceModel, messages: List<MessageModel>, joindreRoom: () -> Unit) {
+    Scaffold(topBar = { ChatAppBar(espace, joindreRoom) }) {
         Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
             ChatSection(Modifier.weight(1f), messages)
             EnvoiMessageSection()
@@ -53,7 +57,7 @@ fun ChatPageBody(espace: EspaceModel, messages: List<MessageModel>) {
 
 
 @Composable
-fun ChatAppBar(espace: EspaceModel) {
+fun ChatAppBar(espace: EspaceModel, joindreRoom: () -> Unit) {
     val appCtx = LocalAppCtxt.current
     TopAppBar(
         backgroundColor = Color.Transparent,
@@ -65,6 +69,11 @@ fun ChatAppBar(espace: EspaceModel) {
 
         },
         title = { Text(espace.name, fontSize = 15.sp) },
+        actions = {
+            TextButton(onClick = { joindreRoom()}) {
+                Text("Souscrire")
+            }
+        }
     )
 }
 
@@ -168,6 +177,6 @@ fun MessageItem(
 @Composable
 @Preview
 fun PreviewChatPage() {
-    ChatPageBody(FakeData.espaces[0], messages = FakeData.messages)
+    ChatPageBody(FakeData.espaces[0], messages = FakeData.messages, {})
 }
 
