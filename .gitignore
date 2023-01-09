@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+com/odc/espacediscussion/utils/Constantes.kt
